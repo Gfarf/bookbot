@@ -1,15 +1,25 @@
-def get_book_text (path_to_file):
-    with open(path_to_file) as f:
-        contents = f.read()
-    return contents
+from stats import count_words, character_count, sort_dicio
+import sys
 
 def main ():
-    pathf = "./books/frankenstein.txt"
-    texto = get_book_text(pathf)
-    count = 0
-    for i in texto.split():
-        count += 1
-    print(f"{count} words found in the document")
+    if not len(sys.argv) == 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    pathf = sys.argv[1]
+    num = count_words(pathf)
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {pathf}...")
+    print("----------- Word Count ----------")
+    print(f"Found {num} total words")
+    print("--------- Character Count -------")
+    letras = character_count(pathf)
+    letras = sort_dicio(letras)
+    for key, value in letras.items():
+        if key.isalpha():
+            print(f"{key}: {value}")
+    print("============= END ===============")
     return
+
+
 
 main()
